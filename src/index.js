@@ -32,26 +32,46 @@ currentDay();
 function newCity(event) {
   event.preventDefault();
   let enterCity = document.querySelector("#inputCity");
-  let showCity = document.querySelector(".currenчt-city");
+  let showCity = document.querySelector(".current-city");
   showCity.innerHTML = `${enterCity.value}`;
 }
 
 let cityForm = document.querySelector("form");
 cityForm.addEventListener("submit", newCity);
 
+let apiKey = "53e34144ce5a79b4d018f2e93c25106e";
+let apiBaseUrl = `https://api.openweathermap.org/data/2.5/weather`;
+
+navigator.geolocation.getCurrentPosition(getLocalWeatherData);
+
 function getLocalWeatherData(position) {
   let getLatitude = position.coords.latitude;
   let getLongitude = position.coords.longitude;
-  let apiKey = "53e34144ce5a79b4d018f2e93c25106e";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${getLatitude}&lon=${getLongitude}&appid=${apiKey}&units=metric`;
+  let apiUrl = `${apiBaseUrl}?lat=${getLatitude}&lon=${getLongitude}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayWeatherData);
 }
-navigator.geolocation.getCurrentPosition(getLocalWeatherData);
 
 let currentLocationTemp = 0;
 
-function calculateFarenheit() {
-  return Math.round((currentLocationTemp * 9) / 5 + 32);
+function calculateFarenheit(temperatureCelsium) {
+  return Math.round((temperatureCelsium * 9) / 5 + 32);
+}
+
+function displayIcon(condition) {
+  let pic = document.querySelector("#picture");
+  if (condition === "clear sky") {
+    pic.src = "src/sun.png";
+  } else if (condition === "few clouds") {
+    pic.src = "src/cloud_sun.png";
+  } else if (condition === "thunderstorm") {
+    pic.src = "src/storm_sun.png";
+  } else if ((condition === "shower rain", "rain")) {
+    pic.src = "src/rain.png";
+  } else if (condition === "snow") {
+    pic.src = "src/snow.png";
+  } else {
+    pic.src = "src/cloud.png";
+  }
 }
 
 function displayWeatherData(response) {
@@ -67,34 +87,15 @@ function displayWeatherData(response) {
   document.querySelector("#winds").innerHTML = Math.round(
     response.data.wind.speed
   );
-  document.querySelector(".current-weather-condition").innerHTML =
-    response.data.weather[0].description;
-  let condition = response.data.weather[0].description;
-  function displayIcon() {
-    let pic = document.querySelector("#picture");
-    console.log(pic);
-    console.log(pic.src);
-    if (condition === "clear sky") {
-      pic.src = "src/sun.png";
-    } else if (condition === "few clouds") {
-      pic.src = "src/cloud_sun.png";
-    } else if (condition === "thunderstorm") {
-      pic.src = "src/storm_sun.png";
-    } else if ((condition === "shower rain", "rain")) {
-      pic.src = "src/rain.png";
-    } else if (condition === "snow") {
-      pic.src = "src/snow.png";
-    } else {
-      pic.src = "src/cloud.png";
-    }
 
-    console.log(pic.src);
-  }
-  displayIcon();
+  let condition = response.data.weather[0].description;
+  document.querySelector(".current-weather-condition").innerHTML = condition;
+
+  displayIcon(condition);
 }
 
 function showFarenheit() {
-  tempCurrent.innerHTML = calculateFarenheit();
+  tempCurrent.innerHTML = calculateFarenheit(currentLocationTemp);
 }
 
 let tempCurrent = document.querySelector(".temp-current");
@@ -115,8 +116,7 @@ function otherCity(event) {
   let showOtherCity = document.querySelector(".current-city");
   showOtherCity = enterOtherCity.value;
 
-  let apiKey = "53e34144ce5a79b4d018f2e93c25106e";
-  let otherCityApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${showOtherCity}&appid=${apiKey}&units=metric`;
+  let otherCityApiUrl = `${apiBaseUrl}?q=${showOtherCity}&appid=${apiKey}&units=metric`;
 
   axios.get(otherCityApiUrl).then(displayWeatherData);
 }
