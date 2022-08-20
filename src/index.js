@@ -87,10 +87,10 @@ function displayForecast(response) {
             </br>
             <div class = "weather-forecast-temp">
               <span class = "weather-forecast-temp-day">
-              ${Math.round(forecastDay.temp.day)}
+              ${Math.round(forecastDay.temp.day)}°
             </span>
             <span class = "weather-forecast-temp-night">
-              / ${Math.round(forecastDay.temp.night)} 
+              / ${Math.round(forecastDay.temp.night)}° 
             </span>
             </div>
             </div>
@@ -136,14 +136,6 @@ function changeCity(event) {
   axios.get(otherCityApiUrl).then(displayWeatherData);
 }
 
-function calculateFarenheit(temperatureCelsium) {
-  return Math.round((temperatureCelsium * 9) / 5 + 32);
-}
-
-function showFarenheit() {
-  tempCurrent.innerHTML = calculateFarenheit(currentLocationTemp);
-}
-
 function showCelsium() {
   tempCurrent.innerHTML = currentLocationTemp;
 }
@@ -161,9 +153,3 @@ let apiBaseUrl = `https://api.openweathermap.org/data/2.5/weather`;
 navigator.geolocation.getCurrentPosition(getLocalWeatherData);
 
 let tempCurrent = document.querySelector(".temp-current");
-
-let tempToFarenheit = document.querySelector("#farenheit");
-tempToFarenheit.addEventListener("click", showFarenheit);
-
-let tempToCelsium = document.querySelector("#celsium");
-tempToCelsium.addEventListener("click", showCelsium);
