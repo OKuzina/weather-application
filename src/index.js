@@ -79,7 +79,7 @@ function displayIcon(condition) {
   } else if (condition === "few clouds") {
     pic.src = "src/cloud_sun.png";
   } else if (condition === "thunderstorm") {
-    pic.src = "src/storm_sun.png";
+    pic.src = "src/storm.png";
   } else if ((condition === "shower rain", "rain")) {
     pic.src = "src/rain.png";
   } else if (condition === "snow") {

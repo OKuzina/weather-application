@@ -13,7 +13,7 @@ ul {
 }
 
 li {
-  font-size: 20px;
+  font-size: 15px;
   color: #4d4a4a;
   text-transform: capitalize;
 }
@@ -34,7 +34,7 @@ li {
   text-align: left;
   color: #4d4a4a;
   padding: 0px;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .temp-current {
@@ -46,13 +46,13 @@ li {
 }
 
 .current-time {
-  font-size: 20px;
+  font-size: 15px;
   color: #4d4a4a;
 }
 
 .current-city {
   color: #4d4a4a;
-  font-size: 40px;
+  font-size: 30px;
   margin-top: 20px;
   font-weight: 500;
 }
@@ -75,4 +75,24 @@ li {
   margin-top: 20px;
   text-align: center;
   color: #4d4a4a;
+}
+
+.weather-forecast {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.weather-forecast-date {
+  font-size: 20px;
+  color: #4d4a4a;
+  font-weight: bold;
+}
+
+.weather-forecast-temp {
+  color: #4d4a4a;
+  font-size: 13px;
+}
+
+.weather-forecast-temp-min {
+  color: rgb(141, 140, 140);
 }
