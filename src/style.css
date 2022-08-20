@@ -19,11 +19,8 @@ li {
 }
 
 #picture {
-  width: 150px;
-  margin: 20px 20px 10px 20px;
-}
-.weekly-image {
-  width: 50px;
+  width: 120px;
+  margin: 20px 20px 10px 25px;
 }
 
 .container {
@@ -71,14 +68,8 @@ li {
   font-size: 20px;
 }
 
-.days {
-  margin-top: 20px;
-  text-align: center;
-  color: #4d4a4a;
-}
-
 .weather-forecast {
-  margin-top: 15px;
+  margin-top: 30px;
   text-align: center;
 }
 
@@ -89,10 +80,16 @@ li {
 }
 
 .weather-forecast-temp {
+  margin-top: 10px;
   color: #4d4a4a;
   font-size: 13px;
 }
 
-.weather-forecast-temp-min {
+.weather-forecast-temp-night {
   color: rgb(141, 140, 140);
+}
+
+.forecast-icon {
+  margin-top: 10px;
+  width: 35px;
 }

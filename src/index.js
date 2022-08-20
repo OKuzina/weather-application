@@ -28,6 +28,80 @@ function showCurrentDay() {
   showDate.innerHTML = `${week[day]}, ${time}`;
 }
 
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+let unit = [];
+
+function findIcon(condition) {
+  if (condition === "clear sky") {
+    src = "src/sun.png";
+  } else if (condition === "few clouds") {
+    src = "src/cloud_sun.png";
+  } else if (condition === "thunderstorm") {
+    src = "src/storm.png";
+  } else if ((condition === "shower rain", "moderate rain", "rain")) {
+    src = "src/rain.png";
+  } else if (condition === "snow") {
+    src = "src/snow.png";
+  } else {
+    src = "src/cloud.png";
+  }
+  return src;
+}
+
+function displayIcon(condition) {
+  let pic = document.querySelector("#picture");
+  pic.src = findIcon(condition);
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
+  console.log(forecast);
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class = "row">`;
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      let condition = forecastDay.weather[0].description;
+
+      forecastHTML =
+        forecastHTML +
+        `
+            <div class = "col-2">
+              <div class = "weather-forecast-date">
+              ${formatDay(forecastDay.dt)}
+              </div>
+              <img src=${findIcon(condition)} class="forecast-icon"></img>
+            </br>
+            <div class = "weather-forecast-temp">
+              <span class = "weather-forecast-temp-day">
+              ${forecastDay.temp.day}
+            </span>
+            <span class = "weather-forecast-temp-night">
+              / ${forecastDay.temp.night} 
+            </span>
+            </div>
+            </div>
+          
+  `;
+    }
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayWeatherData(response) {
   currentLocationTemp = Math.round(response.data.main.temp);
 
@@ -41,6 +115,8 @@ function displayWeatherData(response) {
   let condition = response.data.weather[0].description;
   document.querySelector(".current-weather-condition").innerHTML = condition;
   displayIcon(condition);
+
+  getForecast(response.data.coord);
 }
 
 function getLocalWeatherData(position) {
@@ -70,23 +146,6 @@ function showFarenheit() {
 
 function showCelsium() {
   tempCurrent.innerHTML = currentLocationTemp;
-}
-
-function displayIcon(condition) {
-  let pic = document.querySelector("#picture");
-  if (condition === "clear sky") {
-    pic.src = "src/sun.png";
-  } else if (condition === "few clouds") {
-    pic.src = "src/cloud_sun.png";
-  } else if (condition === "thunderstorm") {
-    pic.src = "src/storm.png";
-  } else if ((condition === "shower rain", "rain")) {
-    pic.src = "src/rain.png";
-  } else if (condition === "snow") {
-    pic.src = "src/snow.png";
-  } else {
-    pic.src = "src/cloud.png";
-  }
 }
 
 showCurrentDay();
