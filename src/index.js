@@ -87,10 +87,10 @@ function displayForecast(response) {
             </br>
             <div class = "weather-forecast-temp">
               <span class = "weather-forecast-temp-day">
-              ${forecastDay.temp.day}
+              ${Math.round(forecastDay.temp.day)}
             </span>
             <span class = "weather-forecast-temp-night">
-              / ${forecastDay.temp.night} 
+              / ${Math.round(forecastDay.temp.night)} 
             </span>
             </div>
             </div>
